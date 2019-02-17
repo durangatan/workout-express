@@ -1,0 +1,31 @@
+{
+  "name": "ebc-workout-express",
+  "version": "1.0.0",
+  "description": "Barebones api layer with mysql support",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "DEBUG=express:* babel-node index.js",
+    "db:create": "babel-node ./db/schema.js",
+    "db:seed": "babel-node ./db/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/durangatan/ebc-workout-express.git"
+  },
+  "author": "durangatan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/durangatan/ebc-workout-express/issues"
+  },
+  "homepage": "https://github.com/durangatan/ebc-workout-express#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
