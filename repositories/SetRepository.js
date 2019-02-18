@@ -30,11 +30,13 @@ class SetRepository {
         exerciseModels.forEach(exercise => {
           exerciseMap[exercise.id] = exercise;
         });
-        return routineSets.map(routineSet => {
-          const relevantWorkoutSet = workoutSetMap[routineSet.setId];
-          const relevantExercise = exerciseMap[relevantWorkoutSet.exerciseId];
-          return new WorkoutSet({ ...relevantWorkoutSet, exercise: relevantExercise });
-        });
+        return routineSets
+          .sort((a, b) => a.ordering - b.ordering)
+          .map(routineSet => {
+            const relevantWorkoutSet = workoutSetMap[routineSet.setId];
+            const relevantExercise = exerciseMap[relevantWorkoutSet.exerciseId];
+            return new WorkoutSet({ ...relevantWorkoutSet, exercise: relevantExercise, id: routineSet.id });
+          });
       });
   }
 }

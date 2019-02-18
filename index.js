@@ -1,10 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { RoutineService } from './logic';
+import { RoutineService, WorkoutService } from './logic';
 import seed from './db/seed';
+import { Workout } from './models';
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));
 // app.use(bodyParser.json);
+const jsonParser = bodyParser.json();
 
 // enable cors for now
 app.use(function(req, res, next) {
@@ -41,6 +43,15 @@ app.get('/routines/:id', (req, res, next) => {
     });
 });
 
+app.post('/workouts', jsonParser, (req, res, next) => {
+  const workout = new Workout(req.body);
+  return WorkoutService()
+    .save(workout)
+    .then(() => {
+      res.send(200);
+    });
+});
+
 app.get('/seed', (req, res, next) => {
   return seed().then(_ => {
     res.send('seeded');
@@ -49,7 +60,5 @@ app.get('/seed', (req, res, next) => {
 
 // // post a new routine
 // app.post('/routine');
-
-// app.post('/workout');
 
 // app.get('/workouts');

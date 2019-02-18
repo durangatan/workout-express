@@ -5,6 +5,7 @@ export default class DatabaseConnector {
   }
   query(sql, args) {
     return new Promise((resolve, reject) => {
+      console.log(`DatabaseConnector: attempted query: ${sql}`);
       this.connection.query(sql, args, (err, rows) => {
         if (err) return reject(err);
         console.log(`DatabaseConnector: executed query: ${sql}`);

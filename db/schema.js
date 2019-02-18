@@ -18,6 +18,8 @@ const createTableStatements = {
 	);`,
   workouts: `CREATE TABLE IF NOT EXISTS workouts (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		startTime Int unsigned,
+		endTime INT unsigned,
 		primary key (id)
 	);`,
   workoutRoutines: `CREATE TABLE IF NOT EXISTS workout_routines (
@@ -27,11 +29,12 @@ const createTableStatements = {
 		CONSTRAINT workout_routine_unique UNIQUE (workoutId, routineId),
 		primary key (id),
 	);`,
-  workoutMeta: `CREATE TABLE IF NOT EXISTS workout_meta (
-		id INT unsigned NOT NULL AUTO_INCREMENT,
-		durationMillis INT unsigned NOT NULL,
-		primary key (id)
-	);`,
+  completedSets: `CREATE TABLE IF NOT EXISTS completed_sets (
+  	id INT unsigned NOT NULL AUTO_INCREMENT,
+  	routineSetId INT unsigned NOT NULL,
+  	workoutId INT unsigned NOT NULL,
+  	primary key (id)
+  );`,
   workoutSets: `CREATE TABLE IF NOT EXISTS workout_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
 		weight INT unsigned NOT NULL,
@@ -44,6 +47,13 @@ const createTableStatements = {
   routineSets: `CREATE TABLE IF NOT EXISTS routine_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
 		routineId INT unsigned NOT NULL,
+		setId INT unsigned NOT NULL,
+		ordering INT unsigned NOT NULL,
+		primary key (id)
+	);`,
+  completedSets: `CREATE TABLE IF NOT EXISTS completed_sets (
+		id INT unsigned NOT NULL AUTO_INCREMENT,
+		workoutId INT unsigned NOT NULL,
 		setId INT unsigned NOT NULL,
 		ordering INT unsigned NOT NULL,
 		primary key (id)

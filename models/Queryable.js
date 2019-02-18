@@ -2,8 +2,9 @@ export default class Queryable {
   constructor() {
     this.insertInto = this.insertInto.bind(this);
   }
-  insertInto(tableName) {
-    const ownKeys = Reflect.ownKeys(this).filter(key => {
+
+  get ownKeys() {
+    return Reflect.ownKeys(this).filter(key => {
       const value = this[key];
       if (!value) {
         return false;
@@ -13,9 +14,20 @@ export default class Queryable {
       }
       return typeof this[key] !== 'function';
     });
-    const queryString = `INSERT INTO ${tableName} (${ownKeys.join()})VALUES (${ownKeys
+  }
+
+  get ownKeysQueryString() {
+    return `(${this.ownKeys.join()})`;
+  }
+
+  get ownValuesQueryString() {
+    return `(${this.ownKeys
       .map(key => `${typeof this[key] === 'number' ? '' : '"'}${this[key]}${typeof this[key] === 'number' ? '' : '"'}`)
-      .join()});`;
+      .join()})`;
+  }
+
+  insertInto(tableName) {
+    const queryString = `INSERT INTO ${tableName} ${this.ownKeysQueryString} VALUES ${this.ownValuesQueryString};`;
     return queryString;
   }
 }
