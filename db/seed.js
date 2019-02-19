@@ -139,12 +139,15 @@ export default function seed() {
 }
 seed()
 	.then(() => {
-		console.log('🌱 Enjoy!');
-		process.exit();
+		setTimeout(() => {
+			console.log('🌱 Enjoy!');
+			process.exit();
+		}, 5000);
 	})
 	.catch(err => {
 		console.log(
-			"hmm...something went wrong... maybe you've already seeded?"
+			"hmm...something went wrong... maybe you've already seeded?",
+			err
 		);
 		process.exit(1);
 	});

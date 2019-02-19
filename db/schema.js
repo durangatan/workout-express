@@ -18,8 +18,8 @@ const createTableStatements = {
 	);`,
 	workouts: `CREATE TABLE IF NOT EXISTS workouts (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
-		startTime Int unsigned,
-		endTime INT unsigned,
+		startTime BIGINT unsigned,
+		endTime BIGINT unsigned,
 		primary key (id)
 	);`,
 	workoutRoutines: `CREATE TABLE IF NOT EXISTS workout_routines (
