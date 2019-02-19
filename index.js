@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { WorkoutService, ExerciseService } from './logic';
 import { RoutineController } from './controllers';
-import seed from './db/seed';
 import { Workout } from './models';
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));
@@ -35,12 +34,6 @@ app.post('/workouts', jsonParser, (req, res, next) => {
     .then(() => {
       res.send(200);
     });
-});
-
-app.get('/seed', (req, res, next) => {
-  return seed().then(_ => {
-    res.send('seeded');
-  });
 });
 
 app.get('/exercises', (req, res, next) => {
