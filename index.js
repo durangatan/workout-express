@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { RoutineService, WorkoutService } from './logic';
+import { WorkoutService, ExerciseService } from './logic';
+import { RoutineController } from './controllers';
 import seed from './db/seed';
 import { Workout } from './models';
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));
-// app.use(bodyParser.json);
 const jsonParser = bodyParser.json();
 
 // enable cors for now
@@ -21,27 +21,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/routines', RoutineController);
+
 app.get('/', function(req, res) {
   res.send('boo');
 });
 // app.get('/exercises', () => {});
-
-app.get('/routines', (req, res, next) => {
-  return RoutineService()
-    .all()
-    .then(routines => {
-      res.send(routines);
-    });
-});
-
-// get a routine by id
-app.get('/routines/:id', (req, res, next) => {
-  return RoutineService()
-    .getById(req.params.id)
-    .then(routine => {
-      res.send(routine);
-    });
-});
 
 app.post('/workouts', jsonParser, (req, res, next) => {
   const workout = new Workout(req.body);
@@ -58,7 +43,10 @@ app.get('/seed', (req, res, next) => {
   });
 });
 
-// // post a new routine
-// app.post('/routine');
-
-// app.get('/workouts');
+app.get('/exercises', (req, res, next) => {
+  return ExerciseService()
+    .all()
+    .then(exercises => {
+      res.send(exercises);
+    });
+});

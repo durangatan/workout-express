@@ -1,12 +1,13 @@
 export default class Queryable {
   constructor() {
     this.insertInto = this.insertInto.bind(this);
+    this.upsertInto = this.upsertInto.bind(this);
   }
 
   get ownKeys() {
     return Reflect.ownKeys(this).filter(key => {
       const value = this[key];
-      if (!value) {
+      if (value === undefined || value === null) {
         return false;
       }
       if (typeof key === 'string' && key[0] === '_') {
@@ -16,8 +17,21 @@ export default class Queryable {
     });
   }
 
+  get upsertKeys() {
+    return this.ownKeys.filter(key => key !== 'id');
+  }
+
   get ownKeysQueryString() {
     return `(${this.ownKeys.join()})`;
+  }
+
+  get upsertQueryString() {
+    return `${this.upsertKeys
+      .map(
+        key =>
+          `${key} = ${typeof this[key] === 'number' ? '' : '"'}${this[key]}${typeof this[key] === 'number' ? '' : '"'}`
+      )
+      .join()}`;
   }
 
   get ownValuesQueryString() {
@@ -28,6 +42,13 @@ export default class Queryable {
 
   insertInto(tableName) {
     const queryString = `INSERT INTO ${tableName} ${this.ownKeysQueryString} VALUES ${this.ownValuesQueryString};`;
+    return queryString;
+  }
+
+  upsertInto(tableName) {
+    const queryString = `INSERT INTO ${tableName} ${this.ownKeysQueryString} VALUES ${
+      this.ownValuesQueryString
+    } ON DUPLICATE KEY UPDATE ${this.upsertQueryString}`;
     return queryString;
   }
 }

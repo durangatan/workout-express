@@ -11,6 +11,12 @@ class ExerciseRepository {
       .query(`SELECT * from exercises WHERE id IN (${exerciseIds.join()});`)
       .then(exercises => exercises.map(exercise => new Exercise(exercise)));
   }
+
+  all() {
+    return this.db
+      .query(`SELECT * from exercises;`)
+      .then(exercises => exercises.map(exercise => new Exercise(exercise)));
+  }
 }
 
 let exerciseRepository;
