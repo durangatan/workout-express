@@ -19,7 +19,7 @@ class WorkoutService {
   }
 
   save(workout) {
-    const { startTime, endTime } = workout;
+    const { startTime, endTime } = new Workout(workout);
     if (!(workout.routines && workout.routines.length)) {
       throw new WorkoutIncompleteError('This workout contains no routines');
     }

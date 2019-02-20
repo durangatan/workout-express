@@ -6,6 +6,10 @@ class WorkoutRepository {
     this.db = databaseConnection;
   }
 
+  all() {
+    return this.db.query(`SELECT * from workouts;`);
+  }
+
   byId(exerciseId) {
     return this.db.query(`SELECT * from workouts where id = ${exerciseId} LIMIT 1;`);
   }

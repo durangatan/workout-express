@@ -6,6 +6,10 @@ class CompletedSetRepository {
     this.db = databaseConnection;
   }
 
+  all() {
+    return this.db.query(`SELECT * from completed_sets;`);
+  }
+
   byIdMulti(completedSetIds) {
     return this.db
       .query(`SELECT * from completed_sets WHERE id IN (${completedSetIds.join()});`)

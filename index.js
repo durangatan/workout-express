@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { WorkoutService, ExerciseService } from './logic';
-import { RoutineController } from './controllers';
+import { ExerciseService } from './logic';
+import { RoutineController, WorkoutController } from './controllers';
 import seed from './db/seed';
 import { Workout } from './models';
 const app = express();
@@ -22,21 +22,11 @@ app.use(function(req, res, next) {
 });
 
 app.use('/routines', RoutineController);
+app.use('/workouts', WorkoutController);
 
 app.get('/', function(req, res) {
   res.send('boo');
 });
-// app.get('/exercises', () => {});
-
-app.post('/workouts', jsonParser, (req, res, next) => {
-  const workout = new Workout(req.body);
-  return WorkoutService()
-    .save(workout)
-    .then(() => {
-      res.send(200);
-    });
-});
-
 app.get('/seed', (req, res, next) => {
   return seed().then(_ => {
     res.send('seeded');

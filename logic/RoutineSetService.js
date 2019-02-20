@@ -7,6 +7,11 @@ class RoutineSetService {
     this.saveMulti = this.saveMulti.bind(this);
     this.byRoutineId = this.byRoutineId.bind(this);
   }
+
+  all() {
+    return this.routineSetRepository.all();
+  }
+
   saveMulti(routineSets) {
     return this.routineSetRepository.upsertMulti(routineSets);
   }

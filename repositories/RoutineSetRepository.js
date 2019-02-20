@@ -9,6 +9,10 @@ class RoutineSetRepository {
     this.insert = this.insert.bind(this);
   }
 
+  all() {
+    return this.db.query(`SELECT * FROM routine_sets`);
+  }
+
   byId(workoutSetId) {
     return this.db.query(`SELECT * FROM routine_sets WHERE id = ${workoutSetId};`);
   }
