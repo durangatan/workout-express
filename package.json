@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start": "DEBUG=express:* babel-node index.js",
     "db:create": "babel-node ./db/schema.js",
-    "db:seed": "babel-node ./db/seed.js"
+    "db:seed": "babel-node ./db/seed.js",
+    "build": "rm -rf dist && webpack",
+    "dev": "webpack --watch & node ./dist/server.js",
+    "start": "node ./dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +22,18 @@
   },
   "homepage": "https://github.com/durangatan/ebc-workout-express#readme",
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^8.0.5",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }
