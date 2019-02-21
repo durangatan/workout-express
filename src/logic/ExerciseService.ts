@@ -17,7 +17,7 @@ export class ExerciseService {
 }
 
 let exerciseService: ExerciseService;
-export default function() {
+export function GetExerciseService() {
   if (!exerciseService) {
     exerciseService = new ExerciseService();
   }

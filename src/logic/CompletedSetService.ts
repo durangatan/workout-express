@@ -27,7 +27,7 @@ export class CompletedSetService {
 }
 
 let completedSetService;
-export default function() {
+export function GetCompletedSetService() {
   if (!completedSetService) {
     completedSetService = new CompletedSetService();
   }
