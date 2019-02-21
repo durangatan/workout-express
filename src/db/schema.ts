@@ -1,9 +1,10 @@
-import mysql from 'mysql';
-import { DatabaseConnector, dbConfig } from './';
+import { DatabaseConnection, dbConfig } from './';
 
 const createTableStatements = {
-	exercises: `CREATE TABLE IF NOT EXISTS exercises (
+  exercises: `CREATE TABLE IF NOT EXISTS exercises (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		machineId VARCHAR(255),
 		name VARCHAR(255) UNIQUE,
 		seatSetting VARCHAR(255),
@@ -11,26 +12,34 @@ const createTableStatements = {
 		notes VARCHAR(255),
 		primary key (id)
 	);`,
-	routines: `CREATE TABLE IF NOT EXISTS routines (
+  routines: `CREATE TABLE IF NOT EXISTS routines (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		name VARCHAR(255) UNIQUE,
 		primary key (id)
 	);`,
-	workouts: `CREATE TABLE IF NOT EXISTS workouts (
+  workouts: `CREATE TABLE IF NOT EXISTS workouts (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		startTime Int unsigned,
 		endTime INT unsigned,
 		primary key (id)
 	);`,
-	workoutRoutines: `CREATE TABLE IF NOT EXISTS workout_routines (
+  workoutRoutines: `CREATE TABLE IF NOT EXISTS workout_routines (
 		id INT NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		workoutId INT unsigned NOT NULL,
 		routineId INT unsigned NOT NULL,
 		CONSTRAINT workout_routine_unique UNIQUE (workoutId, routineId),
 		primary key (id)
 	);`,
-	workoutSets: `CREATE TABLE IF NOT EXISTS workout_sets (
+  workoutSets: `CREATE TABLE IF NOT EXISTS workout_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		weight INT unsigned NOT NULL,
 		repetitions INT unsigned NOT NULL,
 		notes VARCHAR(255),
@@ -38,15 +47,19 @@ const createTableStatements = {
 		exerciseId INT unsigned NOT NULL,
 		primary key (id)
 	);`,
-	routineSets: `CREATE TABLE IF NOT EXISTS routine_sets (
+  routineSets: `CREATE TABLE IF NOT EXISTS routine_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		routineId INT unsigned NOT NULL,
 		setId INT unsigned NOT NULL,
 		ordering INT unsigned NOT NULL,
 		primary key (id)
 	);`,
-	completedSets: `CREATE TABLE IF NOT EXISTS completed_sets (
+  completedSets: `CREATE TABLE IF NOT EXISTS completed_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
+		dateAdded BIGINT unsigned NOT NULL,
+		dateUpdated BIGINT,
 		workoutId INT unsigned NOT NULL,
 		setId INT unsigned NOT NULL,
 		ordering INT unsigned NOT NULL,
@@ -56,16 +69,16 @@ const createTableStatements = {
 
 const dbConfigWithoutDatabase = { ...dbConfig, database: null };
 
-const db = new DatabaseConnector(dbConfigWithoutDatabase);
+const db = new DatabaseConnection(dbConfigWithoutDatabase);
 
 db.query(`CREATE DATABASE IF NOT EXISTS ebc_workout_dev;`)
-	.then(db.query(`USE ebc_workout_dev;`))
-	.then(() =>
-		Promise.all(
-			Object.values(createTableStatements).map(createTableStatement =>
-				db.query(createTableStatement)
-			)
-		)
-	)
-	.then(() => db.close())
-	.then(() => process.exit());
+  .then(() => db.query(`USE ebc_workout_dev;`))
+  .then(() =>
+    Promise.all(
+      Object.values(createTableStatements).map(createTableStatement =>
+        db.query(createTableStatement)
+      )
+    )
+  )
+  .then(() => db.close())
+  .then(() => process.exit());

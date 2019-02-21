@@ -1,19 +1,16 @@
-import { RoutineSetRepository, WorkoutSetRepository } from '../repositories';
-import { RoutineSet, WorkoutSet } from '../models';
+import { WorkoutSetRepository } from '../repositories';
+import { WorkoutSet } from '../../../workout-models';
 
-class WorkoutSetService {
+export class WorkoutSetService {
+  workoutSetRepository: WorkoutSetRepository;
   constructor(workoutSetRepository = WorkoutSetRepository()) {
     this.workoutSetRepository = workoutSetRepository;
-    this.saveMulti = this.saveMulti.bind(this);
-    this.byIdMulti = this.byIdMulti.bind(this);
   }
 
   byIdMulti(workoutSetIds) {
     return this.workoutSetRepository
       .byIdMulti(workoutSetIds)
-      .then(workoutSets =>
-        workoutSets.map(workoutSet => new WorkoutSet(workoutSet))
-      );
+      .then(workoutSets => workoutSets.map(workoutSet => new WorkoutSet(workoutSet)));
   }
 
   saveMulti(workoutSets) {

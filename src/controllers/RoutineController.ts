@@ -1,6 +1,6 @@
 import express from 'express';
 import { RoutineService as RoutineServiceGetter } from '../logic';
-import { Routine, WorkoutSet, RoutineSet } from '../../workout-models';
+import { Routine, WorkoutSet, RoutineSet } from '../../../workout-models';
 import bodyParser from 'body-parser';
 const RoutineController = express.Router();
 const RoutineService = RoutineServiceGetter();

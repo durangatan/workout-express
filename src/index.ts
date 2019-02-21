@@ -1,15 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { RoutineController, WorkoutController } from './controllers';
-import { WorkoutService, ExerciseService } from './logic';
-import { Workout } from './models';
+import { ExerciseService } from './logic';
 
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));
-const jsonParser = bodyParser.json();
 
 // enable cors for now
-app.use(function(req, res, next) {
+app.use(function(_, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
@@ -28,10 +26,8 @@ app.get('/', function(req, res) {
   res.send('boo');
 });
 
-app.get('/exercises', (req, res, next) => {
-  return ExerciseService()
-    .all()
-    .then(exercises => {
-      res.send(exercises);
-    });
-});
+app.get('/exercises', (_req, res, next) => ExerciseService()
+  .all()
+  .then(exercises => {
+    res.send(exercises);
+  }));

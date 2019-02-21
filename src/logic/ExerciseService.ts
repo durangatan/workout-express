@@ -1,9 +1,10 @@
-import { ExerciseRepository } from '../repositories';
+import { GetExerciseRepository } from '../repositories';
+import { ExerciseRepository } from '../repositories/ExerciseRepository';
 
-class ExerciseService {
-  constructor(exerciseRepository = ExerciseRepository()) {
+export class ExerciseService {
+  exerciseRepository: ExerciseRepository;
+  constructor(exerciseRepository = GetExerciseRepository()) {
     this.exerciseRepository = exerciseRepository;
-    this.all = this.all.bind(this);
   }
 
   all() {
@@ -15,7 +16,7 @@ class ExerciseService {
   }
 }
 
-let exerciseService;
+let exerciseService: ExerciseService;
 export default function() {
   if (!exerciseService) {
     exerciseService = new ExerciseService();

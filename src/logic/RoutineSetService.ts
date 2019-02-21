@@ -1,8 +1,10 @@
-import { RoutineSetRepository, WorkoutSetRepository } from '../repositories';
-import { RoutineSet } from '../models';
+import { GetRoutineSetRepository } from '../repositories';
+import { RoutineSetRepository } from 'src/repositories/RoutineSetRepository';
+import { RoutineSet } from '../../../workout-models';
 
-class RoutineSetService {
-  constructor(routineSetRepository = RoutineSetRepository()) {
+export class RoutineSetService {
+  routineSetRepository: RoutineSetRepository;
+  constructor(routineSetRepository = GetRoutineSetRepository()) {
     this.routineSetRepository = routineSetRepository;
     this.saveMulti = this.saveMulti.bind(this);
     this.byRoutineId = this.byRoutineId.bind(this);
@@ -18,13 +20,11 @@ class RoutineSetService {
   byRoutineId(routineId) {
     return this.routineSetRepository
       .byRoutineId(routineId)
-      .then(routineSets =>
-        routineSets.map(routineSet => new RoutineSet(routineSet))
-      );
+      .then(routineSets => routineSets.map(routineSet => new RoutineSet(routineSet)));
   }
 }
 
-let routineSetService;
+let routineSetService: RoutineSetService;
 export default function() {
   if (!routineSetService) {
     routineSetService = new RoutineSetService();
