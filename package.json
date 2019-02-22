@@ -7,8 +7,8 @@
     "test": "npm test",
     "db:create": "babel-node ./db/schema.js",
     "db:seed": "babel-node ./db/seed.js",
-    "build": "rm -rf dist && webpack",
-    "dev": "webpack --watch & node ./dist/server.js",
+    "build": "tsc",
+    "dev": "tsc --watch & node ./dist/server.js",
     "start": "node ./dist/server.js"
   },
   "repository": {
@@ -22,23 +22,16 @@
   },
   "homepage": "https://github.com/durangatan/ebc-workout-express#readme",
   "dependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "@types/body-parser": "^1.17.0",
-    "@types/humps": "^1.1.2",
-    "@types/mysql": "^2.15.5",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "humps": "^2.0.1",
     "mysql": "^2.16.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@types/body-parser": "^1.17.0",
+    "@types/mysql": "^2.15.5",
     "@types/express": "^4.16.1",
-    "babel-loader": "^8.0.5",
-    "ts-loader": "^5.3.3",
-    "typescript": "^3.3.3",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.3.3"
   }
 }
