@@ -1,8 +1,8 @@
 {
-  "name": "ebc-workout-express",
+  "name": "workout-express",
   "version": "1.0.0",
-  "description": "Barebones api layer with mysql support",
-  "main": "index.js",
+  "description": "RESTful API layer with MySql support",
+  "main": "index.ts",
   "scripts": {
     "test": "npm test",
     "db:create": "babel-node ./db/schema.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/durangatan/ebc-workout-express.git"
+    "url": "git+ssh://git@github.com/durangatan/workout-express.git"
   },
   "author": "durangatan",
   "license": "ISC",
