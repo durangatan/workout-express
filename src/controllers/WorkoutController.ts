@@ -1,19 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { WorkoutService as WorkoutServiceGetter } from '../logic';
+import { GetWorkoutService } from '../logic';
 
 const WorkoutController = express.Router();
-const WorkoutService = WorkoutServiceGetter();
+const WorkoutService = GetWorkoutService();
 const jsonParser = bodyParser.json();
 
 WorkoutController.post('/', jsonParser, (req, res, next) => {
-  return WorkoutService.save(workout).then(() => {
-    res.send(200);
-  });
+	return WorkoutService.save(req.body).then(() => {
+		res.send(200);
+	});
 });
 
 WorkoutController.get('/', (req, res, next) => {
-  return WorkoutService.all().then(workouts => res.send(workouts));
+	return WorkoutService.all().then(workouts => res.send(workouts));
 });
 
 export default WorkoutController;

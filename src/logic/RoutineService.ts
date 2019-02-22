@@ -79,7 +79,7 @@ export class RoutineService {
 }
 
 let routineService: RoutineService;
-export default function() {
+export function GetRoutineService() {
   if (!routineService) {
     routineService = new RoutineService();
   }

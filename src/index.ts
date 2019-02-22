@@ -1,7 +1,6 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import { RoutineController, WorkoutController } from './controllers';
-import { ExerciseService } from './logic';
+import { GetExerciseService } from './logic';
 
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));
@@ -26,7 +25,7 @@ app.get('/', function(req, res) {
   res.send('boo');
 });
 
-app.get('/exercises', (_req, res, next) => ExerciseService()
+app.get('/exercises', (_req, res, next) => GetExerciseService()
   .all()
   .then(exercises => {
     res.send(exercises);

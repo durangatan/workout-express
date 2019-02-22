@@ -47,7 +47,7 @@ export class WorkoutService {
 }
 
 let workoutService: WorkoutService;
-export default function() {
+export function GetWorkoutService() {
   if (!workoutService) {
     workoutService = new WorkoutService();
   }
