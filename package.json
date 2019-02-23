@@ -8,8 +8,8 @@
     "db:create": "babel-node ./db/schema.js",
     "db:seed": "babel-node ./db/seed.js",
     "build": "tsc",
-    "dev": "tsc --watch & node ./dist/server.js",
-    "start": "node ./dist/server.js"
+    "dev": "tsc -w & node ./dist/index.js",
+    "start": "node ./dist/workout-express/src/index.js"
   },
   "repository": {
     "type": "git",

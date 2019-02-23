@@ -1,5 +1,6 @@
 import { DatabaseConnection, dbConfig } from '../db';
-import { Sequelizer, QueryableId, Queryable, WithId } from '../../../workout-utils';
+import { Sequelizer, Queryable, WithId } from '../../../workout-utils';
+import { QueryableId } from '../../../workout-utils/Queryable';
 import { EmptyQueryError } from '../errors';
 
 export default class BaseRepository<T, A> {
@@ -20,11 +21,12 @@ export default class BaseRepository<T, A> {
   }
 
   async byId(id: QueryableId) {
+    console.log(id, typeof id);
     const rows = await this.db.query(this.sequelizer.selectById, id);
     return rows.map(this.modelConstructor);
   }
   async byIdMulti(ids: Array<QueryableId>) {
-    const rows = await this.db.query(this.sequelizer.selectMultiById, ids);
+    const rows = await this.db.query(this.sequelizer.selectMultiById, [ids]);
     return rows.map(this.modelConstructor);
   }
   async all() {

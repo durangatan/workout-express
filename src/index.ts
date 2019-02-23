@@ -1,5 +1,5 @@
 import express from 'express';
-import { RoutineController, WorkoutController } from './controllers';
+import { RoutineController, WorkoutController, ExerciseController } from './controllers';
 import { GetExerciseService } from './logic';
 
 const app = express();
@@ -20,13 +20,8 @@ app.use(function(req, res, next) {
 
 app.use('/routines', RoutineController);
 app.use('/workouts', WorkoutController);
+app.use('/exercises', ExerciseController);
 
 app.get('/', function(req, res) {
   res.send('boo');
 });
-
-app.get('/exercises', (_req, res, next) => GetExerciseService()
-  .all()
-  .then(exercises => {
-    res.send(exercises);
-  }));

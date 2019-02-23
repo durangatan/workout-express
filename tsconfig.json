@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": false,
-    "module": "es6",
+    "module": "commonjs",
     "target": "es5",
     "lib": ["esnext"],
     "skipLibCheck": true,
@@ -12,7 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "downlevelIteration": true,
-    "noEmit": true,
     "baseUrl": "."
   },
   "include": ["src/**/*"]

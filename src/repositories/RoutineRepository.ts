@@ -8,7 +8,7 @@ export class RoutineRepository extends BaseRepository<Routine, RoutineArguments>
     throw new Error("Method not implemented.");
   }
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {
-    super('Routines', (args: RoutineArguments) => new Routine(args), databaseConnection);
+    super('routines', (args: RoutineArguments) => new Routine(args), databaseConnection);
   }
 }
 

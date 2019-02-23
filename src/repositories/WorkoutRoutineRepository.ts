@@ -4,7 +4,7 @@ import WorkoutRoutine, { WorkoutRoutineArguments } from '../../../workout-models
 
 export class WorkoutRoutineRepository extends BaseRepository<WorkoutRoutine, WorkoutRoutineArguments> {
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {
-    super('WorkoutRoutines', (args: WorkoutRoutineArguments) => new WorkoutRoutine(args), databaseConnection);
+    super('workout_routines', (args: WorkoutRoutineArguments) => new WorkoutRoutine(args), databaseConnection);
   }
 }
 

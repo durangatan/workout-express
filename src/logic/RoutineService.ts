@@ -58,9 +58,10 @@ export class RoutineService {
           });
         });
       });
-    return Promise.all([routinePromise, setsPromise]).then(([routine, sets]) => {
-      return { ...routine, sets };
-    });
+    return Promise.all([routinePromise, setsPromise])
+      .then(([routine, sets]) => {
+        return { ...routine, sets };
+      })
   }
   all() {
     return this.routineRepository.all();
