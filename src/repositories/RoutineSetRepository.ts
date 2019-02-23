@@ -1,8 +1,6 @@
 import { DatabaseConnection, dbConfig } from '../db';
 import { BaseRepository } from '.';
-import { RoutineSet } from '../../../workout-models';
-import { RoutineSetArguments } from '../../../workout-models/RoutineSet';
-import { RoutineId } from '../../../workout-models/Routine';
+import { RoutineSet, RoutineSetArguments, RoutineId } from 'workout-models';
 
 export class RoutineSetRepository extends BaseRepository<RoutineSet, RoutineSetArguments> {
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {

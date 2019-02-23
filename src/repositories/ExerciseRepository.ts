@@ -1,7 +1,6 @@
 import { DatabaseConnection, dbConfig } from '../db';
 import { BaseRepository } from './';
-import { Exercise } from '../../../workout-models';
-import { ExerciseArguments } from '../../../workout-models/Exercise';
+import { Exercise, ExerciseArguments } from 'workout-models';
 
 export class ExerciseRepository extends BaseRepository<Exercise, ExerciseArguments> {
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {

@@ -1,7 +1,6 @@
 import { GetRoutineSetRepository } from '../repositories';
 import { RoutineSetRepository } from 'src/repositories/RoutineSetRepository';
-import { RoutineSet } from '../../../workout-models';
-import { WithId } from '../../../workout-utils';
+import { RoutineSet, WithId } from 'workout-models';
 
 export class RoutineSetService {
   routineSetRepository: RoutineSetRepository;

@@ -3,9 +3,8 @@ import { GetCompletedSetService } from '../logic';
 import { WorkoutIncompleteError } from '../errors';
 import { WorkoutRepository } from 'src/repositories/WorkoutRepository';
 import { WorkoutRoutineRepository } from 'src/repositories/WorkoutRoutineRepository';
-import { Workout, WorkoutRoutine, RoutineSet } from '../../../workout-models';
+import { Workout, WorkoutRoutine, WorkoutArguments } from 'workout-models';
 import { CompletedSetService } from './CompletedSetService';
-import { WorkoutArguments } from '../../../workout-models/Workout';
 
 export class WorkoutService {
   workoutRepository: WorkoutRepository;

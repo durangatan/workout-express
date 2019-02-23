@@ -1,6 +1,5 @@
-import { DatabaseConnection, dbConfig } from '../db';
-import { Sequelizer, Queryable, WithId } from '../../../workout-utils';
-import { QueryableId } from '../../../workout-utils/Queryable';
+import { DatabaseConnection, dbConfig, Sequelizer } from '../db';
+import { Queryable, WithId, QueryableId } from 'workout-models';
 import { EmptyQueryError } from '../errors';
 
 export default class BaseRepository<T, A> {

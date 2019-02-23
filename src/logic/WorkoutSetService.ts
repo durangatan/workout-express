@@ -1,7 +1,6 @@
 import { GetWorkoutSetRepository } from '../repositories';
 import { WorkoutSetRepository } from '../repositories/WorkoutSetRepository';
-import { WorkoutSet } from '../../../workout-models';
-import { WorkoutSetArguments } from '../../../workout-models/WorkoutSet';
+import { WorkoutSet, WorkoutSetArguments } from 'workout-models';
 
 export class WorkoutSetService {
   workoutSetRepository: WorkoutSetRepository;

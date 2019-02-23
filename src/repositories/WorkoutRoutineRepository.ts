@@ -1,6 +1,6 @@
 import { DatabaseConnection, dbConfig } from '../db';
 import { BaseRepository } from '.';
-import WorkoutRoutine, { WorkoutRoutineArguments } from '../../../workout-models/WorkoutRoutine';
+import { WorkoutRoutine, WorkoutRoutineArguments } from 'workout-models';
 
 export class WorkoutRoutineRepository extends BaseRepository<WorkoutRoutine, WorkoutRoutineArguments> {
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {

@@ -1,11 +1,10 @@
 import { DatabaseConnection, dbConfig } from '../db';
 import { BaseRepository } from '../repositories';
-import { Routine } from '../../../workout-models';
-import { RoutineArguments } from '../../../workout-models/Routine';
+import { Routine, RoutineArguments } from 'workout-models';
 
 export class RoutineRepository extends BaseRepository<Routine, RoutineArguments> {
   save(routine: any): any {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {
     super('routines', (args: RoutineArguments) => new Routine(args), databaseConnection);

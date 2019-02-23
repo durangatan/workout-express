@@ -4,8 +4,7 @@ import { WorkoutSetService } from './WorkoutSetService';
 import { RoutineSetService } from './RoutineSetService';
 import { ExerciseService } from './ExerciseService';
 import { GetWorkoutSetService, GetRoutineSetService, GetExerciseService } from '.';
-import { Routine, WorkoutSet, RoutineSet, Exercise } from '../../../workout-models';
-import { RoutineId } from '../../../workout-models/Routine';
+import { Routine, WorkoutSet, RoutineSet, Exercise, RoutineId } from 'workout-models';
 
 export class RoutineService {
   routineRepository: RoutineRepository;
@@ -58,10 +57,9 @@ export class RoutineService {
           });
         });
       });
-    return Promise.all([routinePromise, setsPromise])
-      .then(([routine, sets]) => {
-        return { ...routine, sets };
-      })
+    return Promise.all([routinePromise, setsPromise]).then(([routine, sets]) => {
+      return { ...routine, sets };
+    });
   }
   all() {
     return this.routineRepository.all();

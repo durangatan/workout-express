@@ -1,8 +1,6 @@
 import { GetCompletedSetRepository } from '../repositories';
 import { CompletedSetRepository } from '../repositories/CompletedSetRepository';
-import CompletedSet, { CompletedSetId } from '../../../workout-models/CompletedSet';
-import { RoutineSet } from '../../../workout-models';
-import { WorkoutId } from '../../../workout-models/Workout';
+import { CompletedSet, CompletedSetId, RoutineSet, WorkoutId } from 'workout-models';
 
 export class CompletedSetService {
   completedSetRepository: CompletedSetRepository;

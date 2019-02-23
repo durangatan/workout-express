@@ -1,6 +1,5 @@
 import { DatabaseConnection, dbConfig } from '../db';
-import { CompletedSet } from '../../../workout-models';
-import { CompletedSetArguments } from '../../../workout-models/CompletedSet';
+import { CompletedSet, CompletedSetArguments } from 'workout-models';
 import { BaseRepository } from './';
 
 export class CompletedSetRepository extends BaseRepository<CompletedSet, CompletedSetArguments> {

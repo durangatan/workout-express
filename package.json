@@ -32,6 +32,7 @@
     "@types/body-parser": "^1.17.0",
     "@types/mysql": "^2.15.5",
     "@types/express": "^4.16.1",
-    "typescript": "^3.3.3"
+    "typescript": "^3.3.3",
+    "workout-models": "git+https://github.com/durangatan/workout-models.git"
   }
 }

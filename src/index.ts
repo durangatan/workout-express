@@ -1,6 +1,5 @@
 import express from 'express';
 import { RoutineController, WorkoutController, ExerciseController } from './controllers';
-import { GetExerciseService } from './logic';
 
 const app = express();
 app.listen(3001, () => console.log('Server listening at port 3001.'));

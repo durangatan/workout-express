@@ -3,8 +3,8 @@
  *
  */
 
-import { Exercise, Routine, RoutineSet } from '../../../workout-models';
-import { WorkoutSetArguments } from '../../../workout-models/WorkoutSet';
+import { Exercise, Routine, RoutineSet } from 'workout-models';
+import { WorkoutSetArguments } from 'workout-models';
 import { DatabaseConnection, dbConfig } from './';
 import { GetExerciseService, GetRoutineService, GetRoutineSetService, GetWorkoutSetService } from '../logic';
 
