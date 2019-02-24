@@ -71,8 +71,8 @@ const dbConfigWithoutDatabase: ConnectionConfig = { ...dbConfig, database: null 
 
 const db = new DatabaseConnection(dbConfigWithoutDatabase);
 
-db.query(`CREATE DATABASE IF NOT EXISTS ebc_workout_dev;`)
-  .then(() => db.query(`USE ebc_workout_dev;`))
+db.query(`CREATE DATABASE IF NOT EXISTS WORKOUT;`)
+  .then(() => db.query(`USE WORKOUT;`))
   .then(() =>
     Promise.all(Object.values(createTableStatements).map(createTableStatement => db.query(createTableStatement)))
   )

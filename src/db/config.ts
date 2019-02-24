@@ -1,7 +1,7 @@
 export default {
-  host: 'localhost',
+  host: 'db',
   user: 'root',
-  password: process.env.MYSQL_PASS,
-  insecureAuth: true,
-  database: 'EBC_WORKOUT_DEV'
+  password: process.env.MYSQL_ROOT_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  port: 3306
 };
