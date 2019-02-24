@@ -5,7 +5,6 @@ import { RoutineSetService } from './RoutineSetService';
 import { ExerciseService } from './ExerciseService';
 import { GetExerciseSetService, GetRoutineSetService, GetExerciseService } from '.';
 import { Routine, ExerciseSet, RoutineSet, Exercise, RoutineId } from 'workout-models';
-
 export class RoutineService {
   routineRepository: RoutineRepository;
   exerciseSetService: ExerciseSetService;
@@ -23,8 +22,9 @@ export class RoutineService {
     this.routineSetService = routineSetService;
     this.exerciseService = exerciseService;
   }
+
   getById(routineId: RoutineId) {
-    let routineSets = [];
+    let routineSets: Array<RoutineSet> = [];
     let exerciseSetMap = {};
     const routinePromise = this.routineRepository.byId(routineId).then(routines => new Routine(routines[0]));
     const setsPromise = this.routineSetService
@@ -46,8 +46,8 @@ export class RoutineService {
         exerciseModels.forEach(exercise => {
           exerciseMap[exercise.id] = exercise;
         });
-        return routineSets.map(routineSet => {
-          const relevantExerciseSet = exerciseSetMap[routineSet.setId];
+        return routineSets.map((routineSet: RoutineSet) => {
+          const relevantExerciseSet = exerciseSetMap[routineSet.exerciseSetId];
           const relevantExercise = exerciseMap[relevantExerciseSet.exerciseId];
           return new ExerciseSet({
             ...relevantExerciseSet,

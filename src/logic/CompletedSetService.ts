@@ -1,7 +1,7 @@
 import { GetCompletedSetRepository } from '../repositories';
 import { CompletedSetRepository } from '../repositories/CompletedSetRepository';
-import { CompletedSet, CompletedSetId, ExerciseSet, WorkoutId, Workout } from 'workout-models';
-import { WorkoutIncompleteError } from 'src/errors';
+import { CompletedSet, CompletedSetId, ExerciseSet, WorkoutId, Workout, Id } from 'workout-models';
+import { WorkoutIncompleteError, NoIdError } from '../errors';
 
 export class CompletedSetService {
   completedSetRepository: CompletedSetRepository;
@@ -20,14 +20,17 @@ export class CompletedSetService {
     return this.completedSetRepository.insertMultiple(completedSets);
   }
 
-  saveForWorkout(workout: Workout) {
-    if (!workout.completedExerciseSets || !workout.completedExerciseSets.length) {
+  saveForWorkout(completedExerciseSets: Array<ExerciseSet>, workoutId: WorkoutId) {
+    if (!completedExerciseSets || !completedExerciseSets.length) {
       return Promise.reject(new WorkoutIncompleteError('no completed sets for this workout'));
     }
-    const completedExerciseSets = workout.completedExerciseSets.map(
-      (exerciseSet: ExerciseSet) => new CompletedSet({ exerciseSetId: exerciseSet.id, workoutId: workout.id })
+    if (!workoutId) {
+      return Promise.reject(new NoIdError('no Workout Id for these completedSets'));
+    }
+    const completedSets = completedExerciseSets.map(
+      (exerciseSet: ExerciseSet) => new CompletedSet({ exerciseSetId: exerciseSet.id, workoutId })
     );
-    this.completedSetRepository.insertMultiple(completedExerciseSets);
+    this.completedSetRepository.insertMultiple(completedSets);
   }
 
   byWorkoutId(workoutId: WorkoutId) {

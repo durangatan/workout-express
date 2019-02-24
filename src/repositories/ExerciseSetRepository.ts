@@ -4,7 +4,7 @@ import { ExerciseSet, ExerciseSetArguments } from 'workout-models';
 
 export class ExerciseSetRepository extends BaseRepository<ExerciseSet, ExerciseSetArguments> {
   constructor(databaseConnection = new DatabaseConnection(dbConfig)) {
-    super('workout_sets', (args: ExerciseSetArguments) => new ExerciseSet(args), databaseConnection);
+    super('exercise_sets', (args: ExerciseSetArguments) => new ExerciseSet(args), databaseConnection);
   }
 }
 

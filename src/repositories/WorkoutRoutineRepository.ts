@@ -8,7 +8,7 @@ export class WorkoutRoutineRepository extends BaseRepository<WorkoutRoutine, Wor
   }
 }
 
-let workoutRoutineRepository;
+let workoutRoutineRepository: WorkoutRoutineRepository;
 
 export default function() {
   if (!workoutRoutineRepository) {

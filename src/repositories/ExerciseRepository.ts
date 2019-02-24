@@ -8,7 +8,7 @@ export class ExerciseRepository extends BaseRepository<Exercise, ExerciseArgumen
   }
 }
 
-let exerciseRepository;
+let exerciseRepository: ExerciseRepository;
 
 export default function() {
   if (!exerciseRepository) {

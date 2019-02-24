@@ -1,4 +1,5 @@
 import { DatabaseConnection, dbConfig } from './';
+import { ConnectionConfig } from 'mysql';
 
 const createTableStatements = {
   exercises: `CREATE TABLE IF NOT EXISTS exercises (
@@ -61,13 +62,12 @@ const createTableStatements = {
 		dateAdded BIGINT unsigned NOT NULL,
 		dateUpdated BIGINT,
 		workoutId INT unsigned NOT NULL,
-		routineSetId INT unsigned NOT NULL,
-		ordering INT unsigned NOT NULL,
+		exerciseSetId INT unsigned NOT NULL,
 		primary key (id)
 	);`
 };
 
-const dbConfigWithoutDatabase = { ...dbConfig, database: null };
+const dbConfigWithoutDatabase: ConnectionConfig = { ...dbConfig, database: null };
 
 const db = new DatabaseConnection(dbConfigWithoutDatabase);
 
