@@ -7,15 +7,13 @@ export default class DatabaseConnection {
   }
   query(sql: string, args?: any): Promise<Array<any>> {
     return new Promise((resolve, reject) => {
-      console.log(`DatabaseConnection: attempted query: ${sql}`);
-      console.log(args, this.connection.escape(args));
       const query = this.connection.query(`${sql}${args ? this.connection.escape(args) : ''}`, (err, rows) => {
         if (err) return reject(err);
-        console.log(`DatabaseConnection: executed query: ${sql}`);
+        console.log(`DatabaseConnection: executed query: ${sql}${String(args)}`);
         const ensureArray = rows instanceof Array ? rows : [rows];
         resolve(ensureArray);
       });
-      console.log(query);
+      console.log(`DatabaseConnection: attempted query: ${query.sql}${query.values}`);
     });
   }
   close() {

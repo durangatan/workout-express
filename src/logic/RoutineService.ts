@@ -1,45 +1,44 @@
 import { GetRoutineRepository } from '../repositories';
 import { RoutineRepository } from '../repositories/RoutineRepository';
-import { WorkoutSetService } from './WorkoutSetService';
+import { ExerciseSetService } from './ExerciseSetService';
 import { RoutineSetService } from './RoutineSetService';
 import { ExerciseService } from './ExerciseService';
-import { GetWorkoutSetService, GetRoutineSetService, GetExerciseService } from '.';
-import { Routine, WorkoutSet, RoutineSet, Exercise, RoutineId } from 'workout-models';
+import { GetExerciseSetService, GetRoutineSetService, GetExerciseService } from '.';
+import { Routine, ExerciseSet, RoutineSet, Exercise, RoutineId } from 'workout-models';
 
 export class RoutineService {
   routineRepository: RoutineRepository;
-  workoutSetService: WorkoutSetService;
+  exerciseSetService: ExerciseSetService;
   routineSetService: RoutineSetService;
   exerciseService: ExerciseService;
 
   constructor(
     routineRepository = GetRoutineRepository(),
-    workoutSetService = GetWorkoutSetService(),
+    exerciseSetService = GetExerciseSetService(),
     routineSetService = GetRoutineSetService(),
     exerciseService = GetExerciseService()
   ) {
     this.routineRepository = routineRepository;
-    this.workoutSetService = workoutSetService;
+    this.exerciseSetService = exerciseSetService;
     this.routineSetService = routineSetService;
     this.exerciseService = exerciseService;
   }
-  // the body of this method belongs in a resolver
   getById(routineId: RoutineId) {
     let routineSets = [];
-    let workoutSetMap = {};
+    let exerciseSetMap = {};
     const routinePromise = this.routineRepository.byId(routineId).then(routines => new Routine(routines[0]));
     const setsPromise = this.routineSetService
       .byRoutineId(routineId)
       .then((routineSetRes: Array<RoutineSet>) => {
         routineSets = routineSetRes;
-        const workoutSetIds = [...new Set(routineSetRes.map(_ => _.setId))];
-        return this.workoutSetService.byIdMulti(workoutSetIds);
+        const exerciseSetIds = [...new Set(routineSetRes.map(_ => _.exerciseSetId))];
+        return this.exerciseSetService.byIdMulti(exerciseSetIds);
       })
-      .then((workoutSets: Array<WorkoutSet>) => {
-        workoutSets.forEach(workoutSet => {
-          workoutSetMap[workoutSet.id] = workoutSet;
+      .then((exerciseSets: Array<ExerciseSet>) => {
+        exerciseSets.forEach(exerciseSet => {
+          exerciseSetMap[exerciseSet.id] = exerciseSet;
         });
-        const exerciseIds = [...new Set(workoutSets.map(_ => _.exerciseId))];
+        const exerciseIds = [...new Set(exerciseSets.map(_ => _.exerciseId))];
         return this.exerciseService.byIdMulti(exerciseIds);
       })
       .then((exerciseModels: Array<Exercise>) => {
@@ -48,12 +47,11 @@ export class RoutineService {
           exerciseMap[exercise.id] = exercise;
         });
         return routineSets.map(routineSet => {
-          const relevantWorkoutSet = workoutSetMap[routineSet.setId];
-          const relevantExercise = exerciseMap[relevantWorkoutSet.exerciseId];
-          return new WorkoutSet({
-            ...relevantWorkoutSet,
-            exercise: relevantExercise,
-            id: routineSet.id
+          const relevantExerciseSet = exerciseSetMap[routineSet.setId];
+          const relevantExercise = exerciseMap[relevantExerciseSet.exerciseId];
+          return new ExerciseSet({
+            ...relevantExerciseSet,
+            exercise: relevantExercise
           });
         });
       });
@@ -65,11 +63,15 @@ export class RoutineService {
     return this.routineRepository.all();
   }
 
-  save({ routine, workoutSets, routineSets }) {
+  create(routine: Routine) {
+    return this.routineRepository.insert(routine);
+  }
+
+  save({ routine, exerciseSets, routineSets }) {
     return this.routineRepository
-      .save(routine)
+      .upsert(routine)
       .then(() => {
-        return this.workoutSetService.saveMulti(workoutSets);
+        return this.exerciseSetService.saveMulti(exerciseSets);
       })
       .then(() => {
         return this.routineSetService.saveMulti(routineSets);

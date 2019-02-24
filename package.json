@@ -5,11 +5,12 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm test",
-    "db:create": "babel-node ./db/schema.js",
-    "db:seed": "babel-node ./db/seed.js",
+    "db:create": "npm run build && node ./dist/db/schema.js",
+    "db:seed": "npm run build && node ./dist/db/seed.js",
+    "db:drop": "npm run build && node ./dist/db/drop.js",
     "build": "tsc",
     "dev": "tsc -w & node ./dist/index.js",
-    "start": "node ./dist/workout-express/src/index.js"
+    "start": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",

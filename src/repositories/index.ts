@@ -5,5 +5,5 @@ export { default as GetWorkoutRepository } from './WorkoutRepository';
 export { default as GetWorkoutRoutineRepository } from './WorkoutRoutineRepository';
 
 export { default as GetCompletedSetRepository } from './CompletedSetRepository';
-export { default as GetWorkoutSetRepository } from './WorkoutSetRepository';
+export { default as GetExerciseSetRepository } from './ExerciseSetRepository';
 export { default as GetRoutineSetRepository } from './RoutineSetRepository';

@@ -1,13 +1,11 @@
 import { GetRoutineSetRepository } from '../repositories';
 import { RoutineSetRepository } from 'src/repositories/RoutineSetRepository';
-import { RoutineSet, WithId } from 'workout-models';
+import { RoutineSet, WithId, RoutineSetId } from 'workout-models';
 
 export class RoutineSetService {
   routineSetRepository: RoutineSetRepository;
   constructor(routineSetRepository = GetRoutineSetRepository()) {
     this.routineSetRepository = routineSetRepository;
-    this.saveMulti = this.saveMulti.bind(this);
-    this.byRoutineId = this.byRoutineId.bind(this);
   }
 
   all() {
@@ -26,9 +24,10 @@ export class RoutineSetService {
     return this.routineSetRepository.upsertMulti(routineSets);
   }
   byRoutineId(routineId) {
-    return this.routineSetRepository
-      .byRoutineId(routineId)
-      .then(routineSets => routineSets.map(routineSet => new RoutineSet(routineSet)));
+    return this.routineSetRepository.byRoutineId(routineId);
+  }
+  byIdMulti(routineSetIds: Array<RoutineSetId>) {
+    return this.routineSetRepository.byIdMulti(routineSetIds);
   }
 }
 

@@ -1,6 +1,7 @@
 import { DatabaseConnection, dbConfig, Sequelizer } from '../db';
 import { Queryable, WithId, QueryableId } from 'workout-models';
-import { EmptyQueryError } from '../errors';
+import { EmptyQueryError, NoIdError } from '../errors';
+import { promises } from 'fs';
 
 export default class BaseRepository<T, A> {
   tableName: string;
@@ -20,11 +21,13 @@ export default class BaseRepository<T, A> {
   }
 
   async byId(id: QueryableId) {
-    console.log(id, typeof id);
     const rows = await this.db.query(this.sequelizer.selectById, id);
     return rows.map(this.modelConstructor);
   }
-  async byIdMulti(ids: Array<QueryableId>) {
+  async byIdMulti(ids: Array<QueryableId>): Promise<Array<T>> {
+    if (!ids.length || ids.length < 1) {
+      return Promise.reject(new EmptyQueryError('no ids'));
+    }
     const rows = await this.db.query(this.sequelizer.selectMultiById, [ids]);
     return rows.map(this.modelConstructor);
   }
@@ -34,7 +37,7 @@ export default class BaseRepository<T, A> {
   }
 
   async insert(record: Queryable) {
-    const [okPacket] = await this.db.query(this.sequelizer.insert(record.columns), record.columnValues);
+    const [okPacket] = await this.db.query(this.sequelizer.insert(record.columns), [record.columnValues]);
     return await this.byId(okPacket.insertId);
   }
 
@@ -54,11 +57,14 @@ export default class BaseRepository<T, A> {
     return this.db.query(this.sequelizer.deleteMultiById, ids);
   }
 
-  upsert(record: Queryable & WithId<Queryable>) {
+  upsert(record: Queryable) {
+    if (!record.id) {
+      return Promise.reject(new NoIdError('no id for this record'));
+    }
     return this.db.performTransactionally([this.deleteById(record.id), this.insert(record)]);
   }
 
-  upsertMulti(records: Array<Queryable & WithId<Queryable>>) {
+  upsertMulti(records: Array<Queryable>) {
     return this.db.performTransactionally([
       this.deleteMultiById(records.map(record => record.id)),
       this.insertMultiple(records)

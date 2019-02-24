@@ -7,13 +7,20 @@ const WorkoutService = GetWorkoutService();
 const jsonParser = bodyParser.json();
 
 WorkoutController.post('/', jsonParser, (req, res, next) => {
-	return WorkoutService.save(req.body).then(() => {
-		res.send(200);
-	});
+  return WorkoutService.save(req.body).then(() => {
+    res.send(200);
+  });
 });
 
-WorkoutController.get('/', (req, res, next) => {
-	return WorkoutService.all().then(workouts => res.send(workouts));
+WorkoutController.get('/', async (req, res, next) => {
+  try {
+    const workouts = await WorkoutService.allWithCompletedSets();
+    console.log(workouts);
+    res.send(workouts);
+  } catch (error) {
+    console.log(error);
+    res.send(500);
+  }
 });
 
 export default WorkoutController;

@@ -3,15 +3,14 @@
  *
  */
 
-import { Exercise, Routine, RoutineSet } from 'workout-models';
-import { WorkoutSetArguments } from 'workout-models';
+import { Exercise, Routine, RoutineSet, ExerciseSet, ExerciseSetArguments } from 'workout-models';
 import { DatabaseConnection, dbConfig } from './';
-import { GetExerciseService, GetRoutineService, GetRoutineSetService, GetWorkoutSetService } from '../logic';
+import { GetExerciseService, GetRoutineService, GetRoutineSetService, GetExerciseSetService } from '../logic';
 
 const ExerciseService = GetExerciseService();
 const RoutineService = GetRoutineService();
 const RoutineSetService = GetRoutineSetService();
-const WorkoutSetService = GetWorkoutSetService();
+const ExerciseSetService = GetExerciseSetService();
 
 const exercises = [
   { name: 'Leg Press', machineId: '20', seatSetting: '3', rangeSetting: '4' },
@@ -60,7 +59,7 @@ const exercises = [
   { name: 'Lateral Torso', seatSetting: '5', rangeSetting: '5' }
 ].map(exercise => new Exercise(exercise));
 
-let sets: Array<WorkoutSetArguments> = [
+let sets: Array<ExerciseSetArguments> = [
   {
     exercise: new Exercise({ name: 'Leg Press' }),
     weight: 60,
@@ -133,22 +132,21 @@ let sets: Array<WorkoutSetArguments> = [
 ];
 
 export default async function seed() {
-  const db = new DatabaseConnection(dbConfig);
   let joeRoutine = new Routine({ name: `Joe's East Bank Club Routine` });
-  const routine: Routine = await RoutineService.save({ routine: joeRoutine, workoutSets: [], routineSets: [] });
-  const newExercises = await ExerciseService.saveMulti(exercises);
+  const [routine]: Array<Routine> = await RoutineService.create(joeRoutine);
+  const newExercises = await ExerciseService.createMulti(exercises);
   const newSets = sets.map(set => {
     set.exerciseId = newExercises.find(exercise => exercise.name === set.exercise.name).id;
-    return set;
+    return new ExerciseSet(set);
   });
-  const allSets = await WorkoutSetService.saveMulti(newSets);
+  const allSets = await ExerciseSetService.createMulti(newSets);
   let ordering = 0;
   await allSets.forEach(async set => {
     if (set.type === 'Warmup') {
       await RoutineSetService.create(
         new RoutineSet({
           routineId: routine.id,
-          setId: set.id,
+          exerciseSetId: set.id,
           ordering
         })
       );
@@ -158,7 +156,7 @@ export default async function seed() {
         RoutineSetService.create(
           new RoutineSet({
             routineId: routine.id,
-            setId: set.id,
+            exerciseSetId: set.id,
             ordering
           })
         );
@@ -175,5 +173,6 @@ seed()
   })
   .catch(err => {
     console.log("hmm...something went wrong... maybe you've already seeded?");
+    console.log(err);
     process.exit(1);
   });

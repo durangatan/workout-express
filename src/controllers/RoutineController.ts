@@ -1,6 +1,6 @@
 import express from 'express';
 import { GetRoutineService } from '../logic';
-import { Routine, WorkoutSet, RoutineSet } from 'workout-models';
+import { Routine, RoutineSet } from 'workout-models';
 import bodyParser from 'body-parser';
 const RoutineController = express.Router();
 const RoutineService = GetRoutineService();
@@ -20,13 +20,9 @@ RoutineController.get('/:id', (req, res, next) => {
 });
 
 RoutineController.post('/', jsonParser, (req, res, next) => {
-  const { routine, workoutSets, routineSets } = req.body;
-  return RoutineService.save({
-    routine: new Routine(routine),
-    workoutSets: workoutSets.map(workoutSet => new WorkoutSet(workoutSet)),
-    routineSets: routineSets.map(routineSet => new RoutineSet(routineSet))
-  }).then(() => {
-    res.send(200);
+  const { routine } = req.body;
+  return RoutineService.create(new Routine(routine)).then(routine => {
+    res.send(routine);
   });
 });
 

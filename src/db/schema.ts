@@ -36,7 +36,7 @@ const createTableStatements = {
 		CONSTRAINT workout_routine_unique UNIQUE (workoutId, routineId),
 		primary key (id)
 	);`,
-  workoutSets: `CREATE TABLE IF NOT EXISTS workout_sets (
+  exerciseSets: `CREATE TABLE IF NOT EXISTS exercise_sets (
 		id INT unsigned NOT NULL AUTO_INCREMENT,
 		dateAdded BIGINT unsigned NOT NULL,
 		dateUpdated BIGINT,
@@ -52,7 +52,7 @@ const createTableStatements = {
 		dateAdded BIGINT unsigned NOT NULL,
 		dateUpdated BIGINT,
 		routineId INT unsigned NOT NULL,
-		setId INT unsigned NOT NULL,
+		exerciseSetId INT unsigned NOT NULL,
 		ordering INT unsigned NOT NULL,
 		primary key (id)
 	);`,
@@ -61,7 +61,7 @@ const createTableStatements = {
 		dateAdded BIGINT unsigned NOT NULL,
 		dateUpdated BIGINT,
 		workoutId INT unsigned NOT NULL,
-		setId INT unsigned NOT NULL,
+		routineSetId INT unsigned NOT NULL,
 		ordering INT unsigned NOT NULL,
 		primary key (id)
 	);`
@@ -74,11 +74,7 @@ const db = new DatabaseConnection(dbConfigWithoutDatabase);
 db.query(`CREATE DATABASE IF NOT EXISTS ebc_workout_dev;`)
   .then(() => db.query(`USE ebc_workout_dev;`))
   .then(() =>
-    Promise.all(
-      Object.values(createTableStatements).map(createTableStatement =>
-        db.query(createTableStatement)
-      )
-    )
+    Promise.all(Object.values(createTableStatements).map(createTableStatement => db.query(createTableStatement)))
   )
   .then(() => db.close())
   .then(() => process.exit());
