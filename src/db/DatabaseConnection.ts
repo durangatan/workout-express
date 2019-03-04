@@ -4,7 +4,7 @@ export default class DatabaseConnection {
 	connection: Connection;
 	constructor(config: ConnectionConfig) {
 		this.connection = mysql.createConnection(
-			`mysql://bdf956db576360:3e4d08c8@us-cdbr-iron-east-03.cleardb.net/heroku_5bed8e4a188f0c8?reconnect=true`
+			process.env.CLEARDB_DATABASE_URL
 		);
 	}
 	query(sql: string, args?: any): Promise<Array<any>> {
