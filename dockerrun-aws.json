@@ -1,0 +1,52 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [
+		{
+			"command": [
+				"--default-authentication-plugin=mysql_native_password"
+			],
+			"essential": true,
+			"image": "mysql",
+			"memory": "128",
+			"name": "database",
+			"environment": [
+				{
+					"name": "MYSQL_ROOT_PASSWORD",
+					"value": "secret123"
+				},
+				{
+					"name": "MYSQL_DATABASE",
+					"value": "WORKOUT"
+				}
+			]
+		},
+		{
+			"command": ["npm", "start"],
+			"essential": true,
+			"mountPoints": [
+				{
+					"containerPath": "/server",
+					"sourceVolume": "volume"
+				}
+			],
+			"name": "server",
+			"image": "duranje/workout-api",
+			"memory": "128",
+			"portMappings": [
+				{
+					"containerPort": 3001,
+					"hostPort": 3001
+				}
+			]
+		}
+	],
+	"family": "family",
+	"volumes": [
+		{
+			"host": {
+				"sourcePath": "."
+			},
+			"name": "volume"
+		}
+	]
+}
