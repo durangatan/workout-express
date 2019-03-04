@@ -1,40 +1,40 @@
 {
-  "name": "workout-express",
-  "version": "1.0.0",
-  "description": "RESTful API layer with MySql support",
-  "main": "index.ts",
-  "scripts": {
-    "test": "npm test",
-    "db:create": "npm run build && node ./dist/db/schema.js",
-    "db:seed": "npm run build && node ./dist/db/seed.js",
-    "db:drop": "npm run build && node ./dist/db/drop.js",
-    "build": "tsc --build tsconfig.json",
-    "dev": "npm run build && npm run start",
-    "start": "node ./dist/index.js",
-    "deploy": "docker build . && docker-compose up"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/durangatan/workout-express.git"
-  },
-  "author": "durangatan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/durangatan/ebc-workout-express/issues"
-  },
-  "homepage": "https://github.com/durangatan/ebc-workout-express#readme",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "mysql": "^2.16.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "@types/body-parser": "^1.17.0",
-    "@types/mysql": "^2.15.5",
-    "@types/express": "^4.16.1",
-    "typescript": "^3.3.3",
-    "workout-models": "git+https://github.com/durangatan/workout-models.git"
-  }
+	"name": "workout-express",
+	"version": "1.0.0",
+	"description": "RESTful API layer with MySql support",
+	"main": "index.ts",
+	"scripts": {
+		"test": "npm test",
+		"db:create": "npm run build && node ./dist/db/schema.js",
+		"db:seed": "npm run build && node ./dist/db/seed.js",
+		"db:drop": "npm run build && node ./dist/db/drop.js",
+		"build": "tsc --build tsconfig.json",
+		"dev": "npm run build && npm run start",
+		"start": "npm run build && node ./dist/index.js",
+		"deploy": "docker build . && docker-compose up"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/durangatan/workout-express.git"
+	},
+	"author": "durangatan",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/durangatan/ebc-workout-express/issues"
+	},
+	"homepage": "https://github.com/durangatan/ebc-workout-express#readme",
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"express": "^4.16.4",
+		"mysql": "^2.16.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.3.3",
+		"@babel/preset-env": "^7.3.1",
+		"@types/body-parser": "^1.17.0",
+		"@types/mysql": "^2.15.5",
+		"@types/express": "^4.16.1",
+		"typescript": "^3.3.3",
+		"workout-models": "git+https://github.com/durangatan/workout-models.git"
+	}
 }
